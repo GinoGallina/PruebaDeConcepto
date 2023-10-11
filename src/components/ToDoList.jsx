@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ToDoItem from "./ToDoItem";
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 const ToDoList = () => {
 
@@ -63,24 +65,28 @@ const ToDoList = () => {
 
     return (
         <div>
-            <h1>To Do List</h1>
-            <ul>
+            <h1 className="text-white mb-4">To Do List</h1>
+            <ul className="list-group">
                 {tasks.map((task) => (
                     //Cambiar el id del task-id
-                    <div key={`task-${task.id}`}>
+                    <div className="row mb-3" key={`task-${task.id}`}>
                         <ToDoItem key={task.id} id={task.id} text={task.text} completed={task.completed} />
-                        <button key={`delete-button-${task.id}`} id={task.id} onClick={() => handleDeleteTask(task.id)}>Borrar</button>
-                        <button key={`complete-button-${task.id}`} id={task.id} onClick={() => handleCompleteTask(task.id)}>Completar</button>
+                        <button className="btn btn-warning col-2 me-2" key={`complete-button-${task.id}`} id={task.id} onClick={() => handleCompleteTask(task.id)}>{(task.completed) ? 'Descompletar' : 'Completar'}</button>
+                        <button className="btn btn-danger col-1" key={`delete-button-${task.id}`} id={task.id} onClick={() => handleDeleteTask(task.id)}>Borrar</button>
                     </div>
                 ))}
             </ul>
-            <input
-                type="text"
-                placeholder="Agregar tarea"
-                value={newTask}
-                onChange={(e) => handleNewTask(e.target.value)}
-            />
-            <button onClick={handleAddTask}>Agregar Tarea</button>
+
+            <div className="row justify-content-center mt-3">
+                <input
+                    className="col-4"
+                    type="text"
+                    placeholder="Agregar tarea"
+                    value={newTask}
+                    onChange={(e) => handleNewTask(e.target.value)}
+                />
+                <button className="col-2 btn btn-success  ms-2" onClick={handleAddTask}>Agregar Tarea</button>
+            </div>
         </div>
     );
 };
