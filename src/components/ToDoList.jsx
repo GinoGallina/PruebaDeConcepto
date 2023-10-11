@@ -1,67 +1,78 @@
 import React, { useState, useEffect } from "react";
 import ToDoItem from "./ToDoItem";
 import 'bootstrap/dist/css/bootstrap.min.css';
-
+import axios from 'axios';
 
 const ToDoList = () => {
 
 
-    /* const [tasks, setTask] = useState([
-         { id: 1, text: "Comprar leche", completed: false },
-         { id: 2, text: "Lavar los platos", completed: true },
-         { id: 3, text: "Sacar la basura", completed: false },
-         { id: 4, text: "Ir al gimnasio", completed: false },
-     ]);*/
     const [tasks, setTasks] = useState([]);
     const [newTask, setNewTask] = useState('');
     
-
-
-    useEffect(() => {
-        // Recuperar las tareas almacenadas en el almacenamiento local al cargar la página
-        const storedTasks = localStorage.getItem('tasks');
-        if (storedTasks) {
-            setTasks(JSON.parse(storedTasks));
-        }
-    }, []); // Se ejecuta solo en la primera renderización
-
-    useEffect(() => {
-        // Almacenar las tareas en el almacenamiento local cada vez que cambien
-        localStorage.setItem('tasks', JSON.stringify(tasks));
-    }, [tasks]); // Se ejecuta cuando tasks cambia
-
-
     const findLastId = () =>{
         console.log(tasks.length)
         return tasks.length;
     }
 
+    useEffect(() => {
+        // Realiza una solicitud al servidor para obtener las tareas
+        axios.get('http://localhost:3000/tasks')
+            .then((response) => {
+                // Procesa la respuesta aquí
+                console.log(response.data);
+                setTasks(response.data);
+            })
+            .catch((error) => {
+                // Maneja errores aquí
+                console.error(error);
+            });
+    }, []);
+
+
     const handleAddTask = () => {
-        //VER Q EL ID SEA EL SIGUENTE
-        if (newTask.trim() !== '') {
-            setTasks([...tasks, { id: findLastId(), text:newTask, completed: false }]);
-            setNewTask('');
-        }
-        console.log(findLastId())
-        console.log(tasks)
+
+        // Realiza una solicitud al servidor para obtener las tareas
+        axios.post('http://localhost:3000/tasks', { id: findLastId(), text: newTask, completed: false })
+            .then((response) => {
+                // Procesa la respuesta aquí
+                console.log(response.data);
+                setTasks([...tasks, response.data]);
+                setNewTask('');
+            })
+            .catch((error) => {
+                // Maneja errores aquí
+                console.error(error);
+            });
+
     };
 
     const handleNewTask = (text)=>{
         setNewTask(text);
     }
     const handleDeleteTask = (id)=>{
-        const updatedTasks = tasks.filter((_, i) => i !== id);
-        setTasks(updatedTasks);
+        axios.delete(`http://localhost:3000/tasks/${id}`)
+            .then(response => {
+                console.log(response.data)
+                const updatedTasks = tasks.filter(task => task.id !== id);
+                setTasks(updatedTasks);
+            })
+            .catch(error => console.error(error));
     }
 
     const handleCompleteTask = (id) => {
-        setTasks(tasks.map((task) => {
-            if (task.id === id) {
-                task.completed = !task.completed;
-            }
-            return task;
-        }));
-    };
+        // Realiza una solicitud al servidor para completar una tarea
+        axios.put(`http://localhost:3000/tasks/${id}`)
+            .then(response => {
+                const updatedTasks = tasks.map(task => {
+                    if (task.id === id) {
+                        return response.data;
+                    }
+                    return task;
+                });
+                setTasks(updatedTasks);
+            })
+            .catch(error => console.error(error));
+    }
 
     return (
         <div>
