@@ -1,13 +1,55 @@
 ---
-import React from "react";
-import ReactDOM from "react-dom";
-import ToDoList from "../../components/ToDoList.jsx";
 import Layout from '../../layouts/Layout.astro'
+import {fetchTasks, fetchUsername} from '../../data/tasks/tasks.js'
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 
+import React from "react";
+import CompleteButton from '../../components/CompleteButton.jsx';
+import DeleteButton from '../../components/DeleteButton.jsx';
+import AddButton from '../../components/AddButton.jsx';
+
+
+
+
+
+let className = (completed)=>{
+  if(!completed){
+    return "text-white col-4"
+  }else{
+    return "text-white col-4 text-decoration-line-through"
+  }
+}
+
+
+
+const tasks = await fetch("http://localhost:4321/tasks/tasks")
+  .then(response => response.json())
+  .then(arr => {  return arr.data; });
+
+console.log(tasks)
 ---
+
+
 <Layout>
-    <ToDoList client:load/>
+    	<div>
+        <h1 class="text-white mb-4 mt-3">To Do List</h1>
+
+        <div class="row mb-3">
+          <ul class="list-group">
+            {tasks.map((task) => (
+              <div class="row mb-3" key={`task-${task.id}`}>
+                <li class={className(task.completed)}" id={task.id} key={task.id}>{task.text} </li>
+                <CompleteButton id={task.id} completed={task.completed} client:load></CompleteButton>
+                <DeleteButton id={task.id} client:load></DeleteButton>
+              </div>
+            ))}
+          </ul>
+        <div/>
+      </div>
+
+
+      <AddButton lastId={tasks.length} client:load></AddButton>
 </Layout>
 
 
