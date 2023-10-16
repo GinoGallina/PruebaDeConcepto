@@ -27,7 +27,19 @@ const tasks = await fetch("http://localhost:4321/tasks/tasks")
   .then(response => response.json())
   .then(arr => {  return arr.data; });
 
-console.log(tasks)
+
+let lastId = ()=>{
+  if(tasks.length>0){
+    return tasks[tasks.length-1].id+1;
+  }else{
+    return 0;
+    
+  }
+}
+
+console.log(tasks);
+console.log(lastId());
+
 ---
 
 
@@ -49,7 +61,7 @@ console.log(tasks)
       </div>
 
 
-      <AddButton lastId={tasks.length} client:load></AddButton>
+      <AddButton lastId={lastId()} client:load></AddButton>
 </Layout>
 
 

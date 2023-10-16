@@ -7,13 +7,13 @@ const AddButton = ({ lastId }) => {
 
 
     const [newTask, setNewTask] = useState('');
-
+    const ultId = lastId;
 
 
 
     const handleDAdd = async () => {
         try {
-            let id=lastId;
+            let id = ultId;
             const response = await fetch(`http://localhost:4321/tasks/tasks`, {
                 method: "POST",
                 headers: {
@@ -68,40 +68,3 @@ export default AddButton;
 
 
 
-
-/*
-  const getLastId = ()=>{
-    if(buttonsC.length==0){
-      return 0;
-    }else{
-      const lastButton = buttonsC[buttonsC.length - 1];
-      console.log(Number(lastButton.id.slice(16)))
-      return Number(lastButton.id.slice(16))+Number(1); 
-    }
-  }
-
-  const btnAdd=document.getElementById("btnAdd");
-  btnAdd.addEventListener("click",async ()=>{
-    const newTask=document.getElementById('newTask').value;
-    if(newTask!=''){
-      let id = getLastId();
-      console.log(id);
-
-      const tasksResponse = await fetch(`http://localhost:4321/tasks/tasks`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        "id":id,
-        "text":newTask,
-        "completed":false
-        })
-      });
-      const response = await tasksResponse.json();
-      console.log(response)
-    }
-  })
-
-
-*/
