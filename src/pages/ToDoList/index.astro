@@ -1,6 +1,5 @@
 ---
 import Layout from '../../layouts/Layout.astro'
-import {fetchTasks, fetchUsername} from '../../data/tasks/tasks.js'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
@@ -8,7 +7,7 @@ import React from "react";
 import CompleteButton from '../../components/CompleteButton.jsx';
 import DeleteButton from '../../components/DeleteButton.jsx';
 import AddButton from '../../components/AddButton.jsx';
-
+import { fetchTasks } from "../../../data/tasks.js";
 
 
 
@@ -23,9 +22,13 @@ let className = (completed)=>{
 
 
 
-const tasks = await fetch("http://localhost:4321/tasks/tasks")
+//const tasks = await fetchTasks();
+
+
+const tasks = await fetch("http://localhost:4321/api/tasks")
   .then(response => response.json())
   .then(arr => {  return arr.data; });
+
 
 
 let lastId = ()=>{

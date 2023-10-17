@@ -22,6 +22,9 @@ export default defineConfig({
     ],
     output: 'server',
     adapter: nodejs({
-        mode: 'middleware' // or 'standalone'
+        mode: 'middleware', // or 'standalone',
+        apiPath: '/api',
     }),
 });
+
+export const apiPath = "/api";

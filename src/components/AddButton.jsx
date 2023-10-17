@@ -1,6 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useEffect, useState } from 'react';
-import { tasks } from '../pages/tasks/tasks.ts';
+import { tasks } from '../pages/api/tasks.ts';
 
 
 const AddButton = ({ lastId }) => {
@@ -14,7 +14,7 @@ const AddButton = ({ lastId }) => {
     const handleDAdd = async () => {
         try {
             let id = ultId;
-            const response = await fetch(`http://localhost:4321/tasks/tasks`, {
+            const response = await fetch(`/api/tasks`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

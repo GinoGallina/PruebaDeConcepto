@@ -9,7 +9,7 @@ const DeleteButton = ({ id }) => {
 
     const handleDelete= async ()=>{
         try {
-            const response = await fetch(`http://localhost:4321/tasks/${id}`, {
+            const response = await fetch(`/api/${id}`, {
                 method: "DELETE",
                 headers: {
                     "Content-Type": "application/json",

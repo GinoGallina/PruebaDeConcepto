@@ -14,7 +14,6 @@ export const GET: APIRoute = ({ params, request }) => {
 export const POST: APIRoute = async ({ request }) => {
     if (request.headers.get("Content-Type") === "application/json") {
         const task = await request.json();
-        console.log(task)
         tasks.push(task);
     return new Response(JSON.stringify({
         tasks

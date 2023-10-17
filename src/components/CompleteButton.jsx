@@ -9,7 +9,7 @@ const CompleteButton = ({ id,completed }) => {
 
     const handleComplete = async () => {
         try {
-            const response = await fetch(`http://localhost:4321/tasks/${id}`, {
+            const response = await fetch(`/api/${id}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
