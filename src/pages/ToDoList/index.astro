@@ -25,7 +25,12 @@ let className = (completed)=>{
 //const tasks = await fetchTasks();
 
 
-const tasks = await fetch("http://localhost:4321/api/tasks")
+/* const tasks = await fetch("http://localhost:4321/api/tasks")
+  .then(response => response.json())
+  .then(arr => {  return arr.data; });
+*/
+
+const tasks = await fetch("https://prueba-de-concepto.vercel.app/api/tasks")
   .then(response => response.json())
   .then(arr => {  return arr.data; });
 
