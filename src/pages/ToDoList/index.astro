@@ -8,6 +8,7 @@ import CompleteButton from '../../components/CompleteButton.jsx';
 import DeleteButton from '../../components/DeleteButton.jsx';
 import AddButton from '../../components/AddButton.jsx';
 import { fetchTasks } from "../../../data/tasks.js";
+import { tasks } from "../api/tasks.js";
 
 
 
@@ -32,10 +33,10 @@ let className = (completed)=>{
 
 
 
-const tasks = await fetch("https://prueba-de-concepto.vercel.app/api/tasks")
+/*const tasks = await fetch("https://prueba-de-concepto.vercel.app/api/tasks")
   .then(response => response.json())
   .then(arr => {  return arr.data; })
-  .catch(err=> console.log(err));
+  .catch(err=> console.log(err));*/
 
 
 
