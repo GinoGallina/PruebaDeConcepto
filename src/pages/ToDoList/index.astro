@@ -22,17 +22,20 @@ let className = (completed)=>{
 
 
 
-//const tasks = await fetchTasks();
+//const tasks2 = await fetchTasks();
 
 
-/* const tasks = await fetch("http://localhost:4321/api/tasks")
+/*const tasks = await fetch("http://localhost:4321/api/tasks")
   .then(response => response.json())
   .then(arr => {  return arr.data; });
 */
 
+
+
 const tasks = await fetch("https://prueba-de-concepto.vercel.app/api/tasks")
   .then(response => response.json())
-  .then(arr => {  return arr.data; });
+  .then(arr => {  return arr.data; })
+  .catch(err=> console.log(err));
 
 
 
@@ -45,6 +48,7 @@ let lastId = ()=>{
   }
 }
 
+console.log('ee')
 console.log(tasks);
 console.log(lastId());
 
@@ -58,8 +62,8 @@ console.log(lastId());
         <div class="row mb-3">
           <ul class="list-group">
             {tasks.map((task) => (
-              <div class="row mb-3" key={`task-${task.id}`}>
-                <li class={className(task.completed)}" id={task.id} key={task.id}>{task.text} </li>
+              <div class="row mb-3">
+                <li class={className(task.completed)} id={task.id} >{task.text} </li>
                 <CompleteButton id={task.id} completed={task.completed} client:load></CompleteButton>
                 <DeleteButton id={task.id} client:load></DeleteButton>
               </div>
